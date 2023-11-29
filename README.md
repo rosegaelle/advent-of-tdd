@@ -35,3 +35,5 @@ The recommended approach for completing the exercises is to start working from e
 
 If you're ready to go, switch to the [exercise-1](https://github.com/jpgough/advent-of-tdd/tree/exercise-1) branch and get moving. Happy coding!
 
+> **⚠ My Solutions**<br>
+> [Exercise 1](https://github.com/jpgough/advent-of-tdd/commit/223024834c315a4963d23e9cbe009aaecd613581)
