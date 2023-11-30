@@ -23,6 +23,20 @@ public class Elf implements Comparable<Elf> {
         totalCalories += calories;
     }
 
+    /**
+     * Adds calories from a list to this elf for carrying
+     * @param caloriesList to incrementally add to total count for this elf
+     */
+    public void addCalories(int[] caloriesList) {
+        if (null != caloriesList) {
+            for(int i=0; i<caloriesList.length; i++) {
+                totalCalories += caloriesList[i];
+            }
+        }
+
+        System.out.println(">>> final: " + totalCalories); //- DEBUG
+    }
+
     @Override
     public int compareTo(Elf that) {
         return this.getTotalCalories() - that.getTotalCalories();
