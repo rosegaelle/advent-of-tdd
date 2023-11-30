@@ -37,3 +37,4 @@ If you're ready to go, switch to the [exercise-1](https://github.com/jpgough/adv
 
 > **⚠ My Solutions**<br>
 > [Exercise 1](https://github.com/jpgough/advent-of-tdd/commit/223024834c315a4963d23e9cbe009aaecd613581)
+> [Exercise 1, Part 2](https://github.com/jpgough/advent-of-tdd/commit/06d20d751f4a71dc0f1c5e40d931746c015179b4)
