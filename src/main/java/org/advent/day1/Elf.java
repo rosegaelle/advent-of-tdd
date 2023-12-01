@@ -1,5 +1,9 @@
 package org.advent.day1;
 
+//import static org.mockito.Answers.values;
+
+import java.util.Arrays;
+
 /**
  * Elf that is assigned calories
  */
@@ -29,12 +33,8 @@ public class Elf implements Comparable<Elf> {
      */
     public void addCalories(int[] caloriesList) {
         if (null != caloriesList) {
-            for(int i=0; i<caloriesList.length; i++) {
-                totalCalories += caloriesList[i];
-            }
+            Arrays.stream(caloriesList).forEach(newCalories -> addCalories(newCalories));
         }
-
-        System.out.println(">>> final: " + totalCalories); //- DEBUG
     }
 
     @Override
