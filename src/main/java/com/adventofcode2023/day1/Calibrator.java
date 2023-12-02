@@ -1,21 +1,31 @@
 package com.adventofcode2023.day1;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 
 class Calibrator {
     private String originalValue = StringUtils.EMPTY;
-    private String parsedValue = StringUtils.EMPTY;
+    private int calibratedValue = 0;
 
     private static Map<String, String> enumeratedDigitsMapping;
     static {
         enumeratedDigitsMapping = new HashMap<>();
-        enumeratedDigitsMapping.put("zero", "0");
+        // numerical
+        enumeratedDigitsMapping.put("1", "1");
+        enumeratedDigitsMapping.put("2", "2");
+        enumeratedDigitsMapping.put("3", "3");
+        enumeratedDigitsMapping.put("4", "4");
+        enumeratedDigitsMapping.put("5", "5");
+        enumeratedDigitsMapping.put("6", "6");
+        enumeratedDigitsMapping.put("7", "7");
+        enumeratedDigitsMapping.put("8", "8");
+        enumeratedDigitsMapping.put("9", "9");
+        // enumerated
         enumeratedDigitsMapping.put("one", "1");
         enumeratedDigitsMapping.put("two", "2");
         enumeratedDigitsMapping.put("three", "3");
@@ -33,7 +43,7 @@ class Calibrator {
 
     public Calibrator(String value) {
         this.setOriginalValue(value);
-        this.setParsedValue();
+        this.calibrateValue();
     }
 
     private void setOriginalValue(String value) {
@@ -46,65 +56,51 @@ class Calibrator {
         return this.originalValue;
     }
 
-    private void setParsedValue() {
-        this.parsedValue = this.getOriginalValue() ;
-
-        String enumeratedDigits[] = new String[enumeratedDigitsMapping.keySet().size()]; 
-        enumeratedDigits = enumeratedDigitsMapping.keySet().toArray(enumeratedDigits);
-
-        while (Arrays.stream(enumeratedDigits).anyMatch(this.parsedValue::contains)) {
-            String firstKey = this.findFirstIndexOfEnumeratedDigit(this.parsedValue);
-            this.parsedValue = this.parsedValue.replaceFirst("(?i)" + firstKey, enumeratedDigitsMapping.get(firstKey));
+    private void calibrateValue() {
+        if(StringUtils.isNotEmpty(this.getOriginalValue())) {
+            this.calibratedValue = (10 * this.getFirstDigit()) + this.getLastDigit();
         }
-
-        this.parsedValue = this.parsedValue.replaceAll("[^\\d]", "");
     }
 
-    private String findFirstIndexOfEnumeratedDigit(String str) {
-        Map<String, Integer> result = new HashMap<>();
+    public int getFirstDigit() {
+        int firstDigit = 0;
+
+        Map<String, Integer> results = new HashMap<>();
 
         for(String key: enumeratedDigitsMapping.keySet()) {
-            if(str.contains(key)) {
-                result.put(key, str.indexOf(key));
+            if(this.getOriginalValue().contains(key)) {
+                results.put(key, this.getOriginalValue().indexOf(key));
             }
         }
 
-        return Collections.min(result.entrySet(), Map.Entry.comparingByValue()).getKey();
-    }
-
-    public String getParsedValue() {
-        return this.parsedValue;
-    }
-
-    public String getFirstDigit() {
-        String firstDigit = StringUtils.EMPTY;
-
-        if(StringUtils.isNotEmpty(parsedValue) && 1 <= parsedValue.length()) {
-            firstDigit = parsedValue.substring(0,1);
+        if(MapUtils.isNotEmpty(results)) {
+            String firstKey = Collections.min(results.entrySet(), Map.Entry.comparingByValue()).getKey();
+            firstDigit = Integer.parseInt(enumeratedDigitsMapping.get(firstKey));
         }
 
         return firstDigit;
     }
 
-    public String getLastDigit() {
-        String lastDigit = StringUtils.EMPTY;
+    public int getLastDigit() {
+        int lastDigit = 0;
 
-        if(StringUtils.isNotEmpty(parsedValue)) {
-            if(1 == parsedValue.length()) {
-                lastDigit = parsedValue.substring(0, 1);
-            } else if(2 <= parsedValue.length()) {
-                lastDigit = parsedValue.substring(parsedValue.length()-1, parsedValue.length());
+        Map<String, Integer> results = new HashMap<>();
+
+        for(String key: enumeratedDigitsMapping.keySet()) {
+            if(this.getOriginalValue().contains(key)) {
+                results.put(key, this.getOriginalValue().lastIndexOf(key));
             }
+        }
+
+        if(MapUtils.isNotEmpty(results)) {
+            String lastKey = Collections.max(results.entrySet(), Map.Entry.comparingByValue()).getKey();
+            lastDigit = Integer.parseInt(enumeratedDigitsMapping.get(lastKey));
         }
 
         return lastDigit;
     }
 
-    public Integer getCalibratedValue() {
-        if(StringUtils.EMPTY.equalsIgnoreCase(getFirstDigit() + getLastDigit())) {
-            return 0;
-        } else {
-            return Integer.valueOf(getFirstDigit() + getLastDigit());
-        }
+    public int getCalibratedValue() {
+        return this.calibratedValue;
     }
 }
