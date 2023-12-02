@@ -14,7 +14,8 @@ class ExecuteOrder66 {
         try{
             // Ask the user for the input filepath
             // e.g. from https://adventofcode.com/2023/day/1
-            /// %WORKSPACE_DIR%/advent-of-tdd/day1_sample_input_file.txt
+            /// %WORKSPACE_DIR%/advent-of-tdd/day1_sample_input_file_1.txt
+            /// %WORKSPACE_DIR%/advent-of-tdd/day1_sample_input_file_2.txt
             // e.g. from https://adventofcode.com/2023/day/1/input
             /// %WORKSPACE_DIR%/advent-of-tdd/day1_puzzle_input_file.txt
             Scanner scanner = new Scanner(System.in);
@@ -32,7 +33,7 @@ class ExecuteOrder66 {
 
 
             List<Integer> calibratedValues = new ArrayList<>();
-            originalValues.forEach(calibrator -> calibratedValues.add(calibrator.calibrate()));
+            originalValues.forEach(calibrator -> calibratedValues.add(calibrator.getCalibratedValue()));
 
 
             Integer sum = calibratedValues.stream().reduce(0, Integer::sum);
